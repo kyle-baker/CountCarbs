@@ -1,0 +1,14 @@
+{
+  "name": "countcarbs",
+  "version": "1.0.0",
+  "description": "Easily find the amount of Carbohydrates in a given food item",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --exit"
+  },
+  "author": "Kyle Baker",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
