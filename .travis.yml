@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: BJymiAH5RCZbVYNKctc0Hwt4XNtjbU538JYnCnVBAdNAdWNeDLRF0LHPaqk40F2bEx7G1sjqb9X6CzO9kALOoocA/B0z3yRg560+R4IcYLrTI3MttoZg7LIqmuzWKsQChg/VwyUyyHOatjZtGabT/oY87CU4zlFm0t3Dfvkp6LAx5hqeQYkoYW2tkdPtl5JtsP0xNWdev3SqiRm7fCuYxsvNqkadHsXz2xIkMF+PDGulOUR81SBju/YzyWsH7d63L/6jlgO0xA6fvU6AIoeijpeupv5+487e2k8T2NrZG50mGQoJx/iZZcH36g3bI7N6l35++T9zAzqLefudvLWbgjKFXgOJzeQSjLSLXaJMe9Mq/tsd9qm+k2CgzQSGXtllnk0bDeteSVbc8B6VIVDnboklS77NNSdrFDw7zKqYrfIm5yhOibQkY/LXf8RY4kn6JcAjtO96zh+JtxA7DmpiqO8hvijLHO1agPPlzAozMQb9cEUd0pgG715+NwHHLF9xIpSC8Z+LfrtNzN/KG9102QHc+RrPsuqhWJJOP7EYlg8Pd/QAbqZ73VlcetsmKlUk9bjtjp/nU1EO7FVLCKz1JZurDL9hpiKFIzSuBtDd19sT5NSuRbbJ2/vnZlbqpFdRwGJAbgFHRyi9OgjeYoN+pWjAas/DaXws7le6oJ4AIwc=
+  app: salty-wave-10771
+  on:
+    repo: kyle-baker/CountCarbs
