@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
-  <h1>Hello World</h1>
+<html lang="en">
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="A web application to help retrieve nutritional information">
+  <title>CarbCounts</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css">
+  <link href="styles/index.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+  <div class="container">
+    <header role="banner">
+      <h1>Carb Counts</h1>
+    </header>
+
+    <main role="main">
+      <h2>Easily find the amount of Carbohydrates in a given food item</h2>
+      <form action="#" class="js-search-form" role="form">
+        <input type="text" class="js-query" placeholder="Ex: Banana, Bread, Apple...">
+        <label for="query"></label>
+        <button type="submit">Search</button>
+      </form>
+    </main>
+
+    <footer>
+      <nav role="navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li class="nav-border"><a href="sign-up.html">Sign Up</a></li>
+          <li><a href="log-in.html">Log In</a></li>
+        </ul>
+      </nav>
+    </footer>
+
+  </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="Edit an item">
+  <title>Edit Item</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css">
+  <link href="styles/index.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+  <header role="banner">
+    <h1>Carb Counts</h1>
+    <nav role="navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <form role="form" action="/signup" accept-charset="UTF-8" method="post" class="form">
+    <fieldset>
+      <legend>Edit Item</legend>
+      <label for="item-name">Name</label>
+      <input type="text" name="item-name" id="item-name" class="form-input" required/>
+      <label for="item-carbs">Carbohydrates</label>
+      <input type="number" name="item-carbs" id="item-carbs" class="form-input" required/>
+      <label for="item-serving">Serving Size</label>
+      <input type="text" name="item-serving" id="item-serving" class="form-input" required/>
+      <label for="item-calories">Calories</label>
+      <input type="text" name="item-calories" id="item-calories" class="form-input" required/>
+      <label for="item-fiber">Dietary Fiber</label>
+      <input type="number" name="item-fiber" id="item-fiber" class="form-input" required/>
+
+      <button type="submit" class="form-submit">Submit</button>
+
+    </fieldset>
+  </form>
+
+  <footer role="contentinfo" class="form-footer">
+    <p>Delete Item</p>
+  </footer>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</body>
+</html>
