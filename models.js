@@ -32,6 +32,17 @@ const ItemSchema = mongoose.Schema({
   publicAccess: {type: Boolean, required: true}
 })
 
+ItemSchema.methods.serialize = function() {
+  return {
+    id: this._id,
+    name: this.name,
+    carbs: this.carbs,
+    calories: this.calories,
+    serving: this.serving,
+    publicAccess: this.publicAccess
+  };
+}
+
 const CarbItem = mongoose.model('CarbItem', ItemSchema);
 
 module.exports = {User, CarbItem};
