@@ -7,3 +7,5 @@ deploy:
   app: salty-wave-10771
   on:
     repo: kyle-baker/CountCarbs
+services:
+  - mongodb

@@ -19,7 +19,7 @@ function displaySearchResults(result) {
   return `
     <div class="result-display">
     <h3 class="result-name">${result.name}</h3>
-    <p class="result-id hidden">${result.id}</p>
+    <p class="result-id hidden">${result._id}</p>
     <p class="result-carbs">Carbohydrates: ${result.carbs}</p>
     <p class="result-calories">Calories: ${result.calories}</p>
     <p class="result-serving">Serving: ${result.serving}</p>
