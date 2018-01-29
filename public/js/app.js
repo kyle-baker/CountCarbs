@@ -1,34 +1,39 @@
-let MOCK_ITEMS = {
-  "items": [
-    {
-      "name": 'Apple',
-      "carbs": 30,
-      "calories": 100,
-      "serving": 'One Apple' 
-    },
-    {
-      "name": 'White Rice',
-      "carbs": 45,
-      "calories": 250,
-      "serving": 'One Cup'
-    }
-  ]
-};
+function getCarbItem(query) {
+    fetch('/carb-items?name=' + query , { 
+      method: 'GET',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    }).then(res => {
+      return res.json()
 
-function getItems(callbackFn) {
-    setTimeout(function(){ callbackFn(MOCK_ITEMS)}, 100);
+    }).then(response => {
+      console.log(response);
+      storeSearchData(response);
+    })
 }
 
-function displayItems(data) {
-    for (index in data.items) {
-       $('.display-results').append('<p>' + data.items[index].name + '</p>');
-    }
+function storeSearchData(data) {
+  const resultsAsString = JSON.stringify(data);
+  localStorage.setItem('results', resultsAsString);
+  debugger
+  window.location.href="results.html";  
 }
 
-function getAndDisplayItems() {
-    getItems(displayItems);
+
+// Event Listeners 
+function watchSubmit() {
+  $('.js-search-form').submit(event => {
+    event.preventDefault();
+    const queryTarget = $(event.currentTarget).find('.js-query');
+    const query = queryTarget.val();
+    //Store query to display on results page
+    const queryAsString = JSON.stringify(query);
+    localStorage.setItem('query', queryAsString);
+    //Clear out the input
+    queryTarget.val("");
+    console.log(query);
+    getCarbItem(query);
+  });
 }
 
-$(function() {
-    getAndDisplayItems();
-})
+// Call Functions
+$(watchSubmit);

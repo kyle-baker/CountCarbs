@@ -23,13 +23,21 @@
     </nav>
   </header>
 
+  <p>Displaying results for <span class="display-query"></span></p>
   <div class="display-results" aria-live="assertive">
+    <div class="result-display">
+      <h3 class="result-name">Placeholder</h3>
+      <p class="result-id hidden">${result.id}</p>
+      <p class="result-carbs">Carbohydrates: ${result.carbs}</p>
+      <p class="result-calories">Calories: ${result.calories}</p>
+      <p class="result-serving">Serving: ${result.serving}</p>
+    </div>
 
   </div>
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/results.js"></script>
 
 </body>
 </html>

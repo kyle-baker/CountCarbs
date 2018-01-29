@@ -38,6 +38,10 @@ header {
   text-align: center;
 }
 
+.hidden {
+  display: none;
+}
+
 .js-query {
   display: block;
   margin-left: auto;

@@ -18,20 +18,21 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.get('/carb-items', (req, res) => {
+  var queryValue = req.query.name;
+  var regex = new RegExp(queryValue);
   CarbItem
-    .find()
-    .limit(10)
-    .then(carbItem => {
-      res.json({
-        carbItems: carbItem.map(
-          (carbItem) => carbItem.serialize())
-      });
-    })
+     .find({ "name" : { $regex: regex, $options: 'i' } },
+          function (err, carbItem) {
+                 if (err) return handleError(err);
+                 console.log('There was an error');
+               })
+    .then(carbItem => { res.json(carbItem)})
     .catch(err => {
       console.error(err);
       res.status(500).json({ message: 'Internal server error' });
     });
 });
+
 
 // can also request by ID
 app.get('/carb-items/:id', (req, res) => {
@@ -39,7 +40,7 @@ app.get('/carb-items/:id', (req, res) => {
     // this is a convenience method Mongoose provides for searching
     // by the object _id property
     .findById(req.params.id)
-    .then(carbItem => res.json(carbItem.serialize()))
+    .then(carbItem => res.json(carbItem))
     .catch(err => {
       console.error(err);
       res.status(500).json({ message: 'Internal server error' });
