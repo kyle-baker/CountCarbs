@@ -17,20 +17,20 @@
     <nav role="navigation">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="sign-up.html">Sign Up</a></li>
+        <li class="nav-border"><a href="sign-up.html">Sign Up</a></li>
         <li><a href="log-in.html">Log In</a></li>
       </ul>
     </nav>
   </header>
 
-  <p>Displaying results for <span class="display-query"></span></p>
+  <p class="search-query">Displaying results for <span class="display-query"></span></p>
   <div class="display-results" aria-live="assertive">
     <div class="result-display">
       <h3 class="result-name">Placeholder</h3>
       <p class="result-id hidden">${result.id}</p>
       <p class="result-carbs">Carbohydrates: ${result.carbs}</p>
       <p class="result-calories">Calories: ${result.calories}</p>
-      <p class="result-serving">Serving: ${result.serving}</p>
+      <p class="result-serving">Serving Size: ${result.serving}</p>
     </div>
 
   </div>

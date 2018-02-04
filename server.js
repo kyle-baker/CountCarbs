@@ -101,7 +101,7 @@ app.put('/carb-items/:id', (req, res) => {
   CarbItem
     // all key/value pairs in toUpdate will be updated -- that's what `$set` does
     .findByIdAndUpdate(req.params.id, { $set: toUpdate })
-    .then(carbItem => res.status(204).end())
+    .then(carbItem => res.status(204).json(carbItem.serialize()).end())
     .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 

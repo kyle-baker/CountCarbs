@@ -14,7 +14,6 @@ function getCarbItem(query) {
 function storeSearchData(data) {
   const resultsAsString = JSON.stringify(data);
   localStorage.setItem('results', resultsAsString);
-  debugger
   window.location.href="results.html";  
 }
 

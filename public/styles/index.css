@@ -18,6 +18,11 @@ button {
   text-align: center;
 }
 
+.display-results {
+  width: 70%;
+  margin: 0 auto;
+}
+
 fieldset {
   padding: 0;
   border: 0;
@@ -115,4 +120,17 @@ ul {
   padding: 5px;
   margin-left: 5px;
   margin-right: 5px;
+}
+
+.result-display {
+  padding: 10px 10px 10px 35px;
+  border: 1px black solid;
+  width: 30%;
+  border-radius: 30px;
+  margin: 10px;
+  display: inline-block;
+}
+
+.search-query {
+  margin-left: 275px;
 }

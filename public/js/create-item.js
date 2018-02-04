@@ -18,6 +18,12 @@ function registerEvent() {
       publicAccess: true
     }
 
+    $("#item-name").val("");
+    $("#item-carbs").val("");
+    $("#item-serving").val("");
+    $("#item-calories").val("");
+    $("#item-fiber").val("");
+
     fetch('/create-carb-item', { 
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
