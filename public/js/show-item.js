@@ -55,7 +55,7 @@ $('.deleteLink').click(event => {
 
 function deleteMessage() {
   return `
-    <p> "${entries.name}" has been Deleted. </p>
+    <p class='deleted-item'> "${entries.name}" has been Deleted. </p>
   `
 }
 

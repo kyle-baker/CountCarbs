@@ -1,6 +1,6 @@
 function registerEvent() {
   $("#log-in").submit(event => {
-    console.log("Register Event ran")
+
     event.preventDefault();
     let username = $("#username").val();
     let password = $("#user-password").val();
@@ -9,7 +9,6 @@ function registerEvent() {
       username: username,
       password: password
     }
-    console.log(payload)
     let id;
     fetch('/user/login', { 
       method: 'POST',
@@ -18,9 +17,10 @@ function registerEvent() {
     }).then(res => {
       return res.json()
     }).then(response => {
-      id = response.id;
+      localStorage.setItem('token', response.authToken)
+      window.location.href="auth-home.html";
+      clearFields();
     })
-    clearFields();
   })
 }
 

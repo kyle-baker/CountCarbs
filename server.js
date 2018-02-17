@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { Strategy: LocalStrategy } = require('passport-local');
+const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
+
 
 //Logging
 const morgan = require('morgan');
@@ -22,6 +25,22 @@ app.use(morgan('common'));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
+//Passport Strategies
+const jwtStrategy = new JwtStrategy(
+  {
+    secretOrKey: JWT_SECRET,
+    // Look for the JWT as a Bearer auth header
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
+    // Only allow HS256 tokens - the same as the ones we issue
+    algorithms: ['HS256']
+  },
+  (payload, done) => {
+    done(null, payload.user);
+  }
+);
+
+passport.use(jwtStrategy);
+
 //USERS
 //Authorization 
 const createAuthToken = function(user) {
@@ -31,6 +50,15 @@ const createAuthToken = function(user) {
     algorithm: 'HS256'
   });
 };
+
+const jwtAuth = passport.authenticate('jwt', {session: false});
+//Protected endpoint
+app.get('/user/protected', jwtAuth, (req, res) => {
+  return res.json({
+    data: 'success'
+  });
+});
+
 //Sign up
 app.post('/user/signup', (req, res) => {
   const requiredFields = ['username', 'password', 'confirmation'];
@@ -94,10 +122,6 @@ app.post('/user/login', (req, res) => {
   }
 })
 
-//Valid, non-expired JWT is required.
-// app.get('/user/protected', (req, res) => {
-
-// });
 
 //CRUD
 app.get('/carb-items', (req, res) => {

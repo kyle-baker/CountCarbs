@@ -1,3 +1,27 @@
+function checkAuthentication() {
+  const token = localStorage.getItem('token');
+  if (token) {
+    //Check if the token is valid
+    fetch('/user/protected', { 
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json', 
+        'Content-Type': 'application/json', 
+        'Authorization' : `Bearer ${token}`
+       },
+      }).then(res => {
+        return res.json()
+      }).then(response => {
+        return response;
+      }).catch(err => {
+        window.location.href="log-in.html";
+      })
+    }
+  else {
+    window.location.href="log-in.html";
+  }
+}
+
 function retrieveItem() {
   let retrievedItem = localStorage.getItem('editItem');
   let item = JSON.parse(retrievedItem);
@@ -56,6 +80,32 @@ function storeUpdatedItem(data) {
   window.location.href="show-item.html";  
 }
 
+function deleteMessage() {
+  return `
+  <div class='result-display'>
+    <p> Item deleted. </p>
+  </div>
+  `
+}
+
+function handleDelete() {
+$('.delete-link').click(event => {
+  event.preventDefault();
+  const deleteID = $('#item-id').val();
+  console.log('Here is the delete item ID in handleDelete' + deleteID)
+  fetch(`/carb-items/${deleteID}`, {
+      method: 'DELETE',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    }).then(res => {
+      return res
+    }).then(response => {
+      let message = deleteMessage();
+      console.log(response);
+      $('.edit-container').html(message);
+    })
+  })
+}
+
 function clearFields() {
   $('#item-name').val("");
   $('#item-carbs').val("");
@@ -65,6 +115,8 @@ function clearFields() {
 }
 //Call Functions
 $(function() {
+  checkAuthentication();
   retrieveItem();
   editItem();
+  handleDelete();
 });

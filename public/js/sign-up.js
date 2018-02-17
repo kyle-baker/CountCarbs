@@ -21,8 +21,8 @@ function registerEvent() {
       return res.json()
     }).then(response => {
       id = response.id;
+      clearFields();
     })
-    clearFields();
   })
 }
 

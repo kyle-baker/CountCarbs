@@ -1,3 +1,27 @@
+function checkAuthentication() {
+  const token = localStorage.getItem('token');
+  if (token) {
+    //Check if the token is valid
+    fetch('/user/protected', { 
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json', 
+        'Content-Type': 'application/json', 
+        'Authorization' : `Bearer ${token}`
+       },
+      }).then(res => {
+        return res.json()
+      }).then(response => {
+        return response;
+      }).catch(err => {
+        window.location.href="log-in.html";
+      })
+    }
+  else {
+    window.location.href="log-in.html";
+  }
+}
+
 function registerEvent() {
   $("#create-form").submit(event => {
     event.preventDefault();
@@ -55,4 +79,5 @@ function clearFields() {
   $("#item-fiber").val("");
 }
 
-$(registerEvent());
+$(checkAuthentication);
+$(registerEvent);

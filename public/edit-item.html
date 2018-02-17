@@ -17,29 +17,30 @@
     <h1 class="app-name">Carb Counts</h1>
   </header>
 
-  <form role="form" action="/signup" accept-charset="UTF-8" method="post" class="form">
-    <fieldset>
-      <legend>Edit Item</legend>
-      <label for="item-name">Name</label>
-      <input type="text" name="item-name" id="item-name" class="form-input" required/>
-      <label for="item-carbs">Carbohydrates</label>
-      <input type="number" name="item-carbs" id="item-carbs" class="form-input" required/>
-      <label for="item-serving">Serving Size</label>
-      <input type="text" name="item-serving" id="item-serving" class="form-input" required/>
-      <label for="item-calories">Calories</label>
-      <input type="text" name="item-calories" id="item-calories" class="form-input" required/>
-      <input type="text" name="item-id" id="item-id" class="hidden" required/>
+  <div class="edit-container">
+    <form role="form" action="/signup" accept-charset="UTF-8" method="post" class="form">
+      <fieldset>
+        <legend>Edit Item</legend>
+        <label for="item-name">Name</label>
+        <input type="text" name="item-name" id="item-name" class="form-input" required/>
+        <label for="item-carbs">Carbohydrates</label>
+        <input type="number" name="item-carbs" id="item-carbs" class="form-input" required/>
+        <label for="item-serving">Serving Size</label>
+        <input type="text" name="item-serving" id="item-serving" class="form-input" required/>
+        <label for="item-calories">Calories</label>
+        <input type="text" name="item-calories" id="item-calories" class="form-input" required/>
+        <input type="text" name="item-id" id="item-id" class="hidden" required/>
 
-      <button type="submit" class="form-submit" id="edit-submit">Submit</button>
-      <p><a href="#">Delete Item</a></p>
-
-    </fieldset>
-  </form>
+        <button type="submit" class="form-submit" id="edit-submit">Submit</button>
+        <p><a href="#" class="delete-link">Delete Item</a></p>
+      </fieldset>
+    </form>
+  </div>
 
   <footer role="contentinfo" class="form-footer">
     <nav role="navigation">
       <ul class="nav">
-        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="auth-home.html" class="nav-link">Home</a></li>
       </ul>
     </nav>
 

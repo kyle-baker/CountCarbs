@@ -1,10 +1,36 @@
+function checkAuthentication() {
+  const token = localStorage.getItem('token');
+  if (token) {
+    //Check if the token is valid
+    fetch('/user/protected', { 
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json', 
+        'Content-Type': 'application/json', 
+        'Authorization' : `Bearer ${token}`
+       },
+      }).then(res => {
+        return res.json()
+      }).then(response => {
+        return response;
+      }).catch(err => {
+        window.location.href="log-in.html";
+      })
+    }
+  else {
+    window.location.href="log-in.html";
+  }
+
+}
+
 function getCarbItem(query) {
   const token = localStorage.getItem('token');
     fetch('/carb-items?name=' + query , { 
       method: 'GET',
       headers: { 
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json', 
+        'Authentication' : `Bearer ${token}`
        },
     }).then(res => {
       return res.json()
@@ -13,10 +39,11 @@ function getCarbItem(query) {
     })
 }
 
+
 function storeSearchData(data) {
   const resultsAsString = JSON.stringify(data);
   localStorage.setItem('results', resultsAsString);
-  window.location.href="results.html";  
+  window.location.href="auth-results.html";  
 }
 
 
@@ -35,5 +62,5 @@ function watchSubmit() {
   });
 }
 
-// Call Functions
+$(checkAuthentication);
 $(watchSubmit);
