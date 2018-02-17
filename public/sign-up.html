@@ -7,37 +7,42 @@
   <meta name="description" content="Sign up for Carb Counts">
   <title>Sign Up</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
   <link href="styles/index.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 
   <header role="banner">
-    <h1>Carb Counts</h1>
-    <nav role="navigation">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="log-in.html">Log In</a></li>
-      </ul>
-    </nav>
+    <h1 class="app-name">Carb Counts</h1>
   </header>
 
-  <form role="form" action="/signup" accept-charset="UTF-8" method="post" class="form">
+  <form role="form" action="/signup" accept-charset="UTF-8" method="post" class="form" id="sign-up">
     <fieldset>
       <legend>Sign up</legend>
       <label for="username">Username</label>
       <input type="text" name="username" id="username" class="form-input" required/>
       <label for="user-password">Password</label>
       <input type="password" name="user-password" id="user-password" class="form-input" required/>
+      <label for="confirm-password">Confirm Password</label>
+      <input type="password" name="confirm-password" id="confirm-password" class="form-input" required/>
       <button type="submit" class="form-submit">Submit</button>
     </fieldset>
+
+    <p>Already have an account? <a href="log-in.html" class="form-link">Log in</a></p>
   </form>
 
   <footer role="contentinfo" class="form-footer">
-    <p>Already have an account? <a href="log-in.html">Log in</a></p>
+    <nav role="navigation">
+      <ul class="nav">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="log-in.html" class="nav-link nav-border">Log In</a></li>
+      </ul>
+    </nav>
   </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="js/sign-up.js"></script>
 
 </body>
 </html>

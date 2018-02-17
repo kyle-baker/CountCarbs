@@ -7,36 +7,38 @@
   <meta name="description" content="A web application to help retrieve nutritional information">
   <title>CarbCounts</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
   <link href="styles/index.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 
-  <div class="container">
-    <header role="banner">
-      <h1>Carb Counts</h1>
-    </header>
 
+    <header role="banner">
+      <h1 class="app-name">Carb Counts</h1>
+    </header>
+  <div class="container">
     <main role="main">
-      <h2>Easily find the amount of Carbohydrates in a given food item</h2>
+      <h2 class="subtitle">Easily find the amount of Carbohydrates in a given food item</h2>
       <form action="#" class="js-search-form" role="form">
         <input type="text" class="js-query" placeholder="Ex: Banana, Bread, Apple...">
         <label for="query"></label>
-        <button type="submit">Search</button>
+        <button type="submit search">Search</button>
       </form>
     </main>
+  </div>
 
     <footer>
-      <nav role="navigation">
-        <ul>
+      <nav role="navigation" class="nav">
+        <ul class="home-nav">
           <li><a href="index.html">Home</a></li>
           <li class="nav-border"><a href="sign-up.html">Sign Up</a></li>
-          <li><a href="log-in.html">Log In</a></li>
+          <li class="nav-border"><a href="log-in.html">Log In</a></li>
         </ul>
       </nav>
     </footer>
 
-  </div>
+
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -2,10 +2,21 @@
   box-sizing: border-box;
 }
 
+.app-name {
+  font-family: 'Lato', sans-serif;  
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 45px;
+}
+
+
 body {
   width: 90%;
   margin: 0 auto;
   font-size: 18px;
+  background-color: #3366CC;
+  font-family: 'Open Sans', sans-serif;
+  min-width: 320px;
 }
 
 button {
@@ -16,6 +27,12 @@ button {
 
 .container {
   text-align: center;
+  background-color: #ffffff;
+  width: 65%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 30px;
+  padding: 40px;
 }
 
 .display-results {
@@ -31,15 +48,12 @@ fieldset {
 
 /* footer */
 .form-footer {
-  text-align: center;
-  margin: 20px auto;
+  margin: 30px auto 50px auto;
   font-weight: 600;
-  border: 0;
-  padding: 0;
 }
 
 header {
-  margin: 100px auto 30px auto;
+  margin: 65px auto 45px auto;
   text-align: center;
 }
 
@@ -52,7 +66,7 @@ header {
   margin-left: auto;
   margin-right: auto;
   margin-top: 40px;
-  width: 30%;
+  width: 60%;
   border-radius: 10px;
   padding: 5px 0px 5px 10px;
 }
@@ -64,20 +78,19 @@ li {
 .form {
   width: 400px;
   padding: 40px;
-  border-radius: 3px;
   border: 1px solid black;
   margin: 0 auto;
+  background-color: #FFFFFF;
+  border-radius: 10%;
 }
 
 .form legend {
   width: 100%;
   line-height: 38px;
-  font-size: 35px;
-  font-weight: 300;
-
+  font-size: 33px;
+  font-weight: 600;
   text-align: center;
-  letter-spacing: 0;
-  margin: 0 auto 45px;
+  margin: 0 auto 35px;
 }
 
 .form p {
@@ -102,35 +115,60 @@ li {
 
 .form-submit {
   height: auto;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 500;
   text-align: center;
-  border: 0;
   cursor: pointer;
-  margin-bottom: 0;  
+  margin-top: 40px;
+  margin-bottom: 30px;  
+  border-radius: 20px;
+  width: 50%
+
+}
+
+.form-link {
+  color: black;
+}
+
+.nav {
+  text-align: center;
+}
+
+.nav a {
+  color: #ffffff;
+  text-decoration: none;
 }
 
 ul {
   text-decoration: none;
 }
 
+.nav-link {
+  color: white;
+  text-decoration: none;
+}
+
 .nav-border {
-  border-left: 2px solid black;
-  border-right: 2px solid black;
-  padding: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
+  border-left: 2px solid #ffffff;
+  padding-left: 5px;
 }
 
 .result-display {
   padding: 10px 10px 10px 35px;
   border: 1px black solid;
-  width: 30%;
+  width: 35%;
   border-radius: 30px;
-  margin: 10px;
+  margin: 15px;
   display: inline-block;
+  background-color: #ffffff;
 }
 
 .search-query {
   margin-left: 275px;
+}
+
+.subtitle {
+  font-weight: 600;
+  font-size: 23px;
+
 }

@@ -7,22 +7,17 @@
   <meta name="description" content="Log in to Carb Counts">
   <title>Log In</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
   <link href="styles/index.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 
   <header role="banner">
-    <h1>Carb Counts</h1>
-    <nav role="navigation">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="sign-up.html">Sign Up</a></li>
-      </ul>
-    </nav>
+    <h1 class="app-name">Carb Counts</h1>
   </header>
 
-  <form role="form" action="/signup" accept-charset="UTF-8" method="post" class="form">
+  <form role="form" action="/signup" accept-charset="UTF-8" method="post" class="form" id="log-in">
     <fieldset>
       <legend>Log in</legend>
       <label for="username">Username</label>
@@ -31,13 +26,20 @@
       <input type="password" name="user-password" id="user-password" class="form-input" required/>
       <button type="submit" class="form-submit">Submit</button>
     </fieldset>
+    <p>Don't have an account? <a href="sign-up.html">Sign up</a></p>
   </form>
 
   <footer role="contentinfo" class="form-footer">
-    <p>Don't have an account? <a href="sign-up.html">Sign up</a></p>
+    <nav role="navigation">
+      <ul class="nav">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="sign-up.html" class="nav-link nav-border">Sign Up</a></li>
+      </ul>
+    </nav>
   </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="js/log-in.js"></script>
 
 </body>
 </html>

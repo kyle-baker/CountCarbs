@@ -3,10 +3,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+//Logging
 const morgan = require('morgan');
 
-
-const { DATABASE_URL, PORT } = require('./config');
+const { DATABASE_URL, PORT, JWT_SECRET, JWT_EXPIRY } = require('./config');
 const { User, CarbItem } = require('./models')
 mongoose.Promise = global.Promise;
 
@@ -14,9 +18,88 @@ const app = express();
 
 //Logging
 app.use(morgan('common'));
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
+//USERS
+//Authorization 
+const createAuthToken = function(user) {
+  return jwt.sign({user}, JWT_SECRET, {
+    subject: user.username,
+    expiresIn: JWT_EXPIRY,
+    algorithm: 'HS256'
+  });
+};
+//Sign up
+app.post('/user/signup', (req, res) => {
+  const requiredFields = ['username', 'password', 'confirmation'];
+  const {username, password, confirmation} = req.body;
+  if (username && password && confirmation) {
+    if (password == confirmation) {
+      User.find({username: username}).then(response => {
+        console.log(response);
+      User
+        .create({
+          username: username,
+          password: bcrypt.hashSync(password, 10),
+        })
+      .then(newUser => res.status(201).json(newUser.serialize()))
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+      })
+    })
+    }
+    else {
+      console.log("Password and password confirmation must match!");
+    }
+  }
+  else {
+    return res.status(422).json({
+      code: 422,
+      reason: 'ValidationError',
+      message: 'Missing field',
+      location: missingField
+    });
+  }
+})
+
+//Log in
+app.post('/user/login', (req, res) => {
+  const requiredFields = ['username', 'password'];
+  const {username, password } = req.body;
+  if (username && password) {
+      User.find({username: username}).then(response => {
+        console.log(response);
+        const user = response[0];
+        if (user.validatePassword(password)) {
+          console.log("You are now logged in");
+          const authToken = createAuthToken(user.serialize());
+          res.json({authToken});
+
+        }
+        else {
+          res.status(401).json({ message: 'Please re-enter username and password' });
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(401).json({ message: 'Please re-enter username and password' });
+      })
+    }
+
+  else {
+    return res.status(400).json({message: 'You must enter a username and password'})
+  }
+})
+
+//Valid, non-expired JWT is required.
+// app.get('/user/protected', (req, res) => {
+
+// });
+
+//CRUD
 app.get('/carb-items', (req, res) => {
   var queryValue = req.query.name;
   var regex = new RegExp(queryValue);
@@ -42,6 +125,7 @@ app.get('/carb-items/:id', (req, res) => {
     .findById(req.params.id)
     .then(carbItem => res.json(carbItem))
     .catch(err => {
+      console.log("Hello World!")
       console.error(err);
       res.status(500).json({ message: 'Internal server error' });
     });
@@ -49,7 +133,6 @@ app.get('/carb-items/:id', (req, res) => {
 
 
 app.post('/create-carb-item', (req, res) => {
-
   const requiredFields = ['name', 'carbs', 'calories', 'serving', 'publicAccess'];
   for (let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
@@ -59,7 +142,6 @@ app.post('/create-carb-item', (req, res) => {
       return res.status(400).send(message);
     }
   }
-
   CarbItem
     .create({
       name: req.body.name,
@@ -86,9 +168,6 @@ app.put('/carb-items/:id', (req, res) => {
     return res.status(400).json({ message: message });
   }
 
-  // we only support a subset of fields being updateable.
-  // if the user sent over any of the updatableFields, we udpate those values
-  // in document
   const toUpdate = {};
   const updateableFields = ['name', 'carbs', 'calories', 'serving', 'publicAccess'];
 
@@ -108,7 +187,7 @@ app.put('/carb-items/:id', (req, res) => {
 app.delete('/carb-items/:id', (req, res) => {
   CarbItem
     .findByIdAndRemove(req.params.id)
-    .then(carbItem => res.status(204).end())
+    .then(carbItem => res.status(204).json(carbItem.serialize()).end())
     .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 

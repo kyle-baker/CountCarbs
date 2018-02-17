@@ -10,11 +10,11 @@ function retrieveSearchData() {
     return displaySearchResults(item);
   });
   $('.display-results').html(results);
-  retreiveQueryValue();
+  retrieveQueryValue();
 }
 
 //Display query user entered
-function retreiveQueryValue() {
+function retrieveQueryValue() {
   let query = localStorage.getItem('query');
   $('.display-query').html(query);
 }
@@ -39,12 +39,11 @@ function displaySearchResults(result) {
 function handleEdit() {
 $('.editLink').click(event => {
   event.preventDefault();
+  console.log("handleEdit ran")
   const editId = $(event.currentTarget).attr("id");
-  console.log(editId);
   let entry = entries.find(object => {
-    return object._id = editId;
+    return object._id == editId;
   })
-  console.log(entry);
   let entryAsString = JSON.stringify(entry);
   localStorage.setItem('editItem', entryAsString);
   window.location.href="edit-item.html";  
@@ -53,22 +52,36 @@ $('.editLink').click(event => {
 }
 
 function handleDelete() {
-$('.deleteLink').click(event => {
-  event.preventDefault();
-  const deleteID = $(event.currentTarget).attr("id");
-  console.log(deleteID);
-  let entry = entries.find(object => {
-    return object._id = deleteID;
-  })
-  console.log(entry);
-  fetch(`/carb-items/${deleteID}`, {
-      method: 'DELETE',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-    }).then(res => {
-      return res
-    })
+  $('.deleteLink').click(event => {
+    event.preventDefault();
+    const deleteID = $(event.currentTarget).attr("id");
 
-})
+    fetch(`/carb-items/${deleteID}`, {
+        method: 'DELETE',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      }).then(res => {
+        return res.json;
+      }).then(response => {
+        let retrievedStringResults = localStorage.getItem('results');
+        let data = JSON.parse(retrievedStringResults);
+        entries = data;
+        let deletedItem = data.find( object => {
+          return object._id == deleteID;
+        })
+        let filtered = data.filter( item => {
+          return item._id !== deleteID;
+        })
+        let deletedItemName = JSON.stringify(deletedItem.name)
+        const results = filtered.map(item => {
+          return displaySearchResults(item);
+        });
+        $('.display-results').html(results);      
+        let retrievedDeletedItem = localStorage.getItem('deletedItem');
+        $('.deleted-item').html(deletedItemName);
+        handleEdit();
+        handleDelete(); 
+      })
+  })
 }
 
 //Call Functions

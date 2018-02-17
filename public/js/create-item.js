@@ -1,8 +1,6 @@
 function registerEvent() {
-  console.log("registerEvent ran");
   $("#create-form").submit(event => {
     event.preventDefault();
-    console.log("event listener worked!");
     let name = $("#item-name").val();
     let carbs = $("#item-carbs").val();
     let serving = $("#item-serving").val();
@@ -17,13 +15,7 @@ function registerEvent() {
       fiber: fiber,
       publicAccess: true
     }
-
-    $("#item-name").val("");
-    $("#item-carbs").val("");
-    $("#item-serving").val("");
-    $("#item-calories").val("");
-    $("#item-fiber").val("");
-
+    let id;
     fetch('/create-carb-item', { 
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
@@ -31,9 +23,36 @@ function registerEvent() {
     }).then(res => {
       return res.json()
     }).then(response => {
-      console.log(response);
+      id = response.id;
+      getNewItem(id);
     })
+    clearFields();
   })
+}
+
+function getNewItem(id) {
+    fetch('/carb-items/' + id , { 
+      method: 'GET',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    }).then(res => {
+      return res.json()
+    }).then(response => {
+      storeUpdatedItem(response);
+    })  
+}
+
+function storeUpdatedItem(data) {
+  const resultsAsString = JSON.stringify(data);
+  localStorage.setItem('item', resultsAsString);
+  window.location.href="show-item.html";  
+}
+
+function clearFields() {
+  $('#item-name').val("");
+  $('#item-carbs').val("");
+  $('#item-serving').val("");
+  $('#item-calories').val("");
+  $("#item-fiber").val("");
 }
 
 $(registerEvent());

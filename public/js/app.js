@@ -4,9 +4,7 @@ function getCarbItem(query) {
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     }).then(res => {
       return res.json()
-
     }).then(response => {
-      console.log(response);
       storeSearchData(response);
     })
 }
@@ -29,7 +27,6 @@ function watchSubmit() {
     localStorage.setItem('query', queryAsString);
     //Clear out the input
     queryTarget.val("");
-    console.log(query);
     getCarbItem(query);
   });
 }

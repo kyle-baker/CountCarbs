@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;
 
 const UserSchema = mongoose.Schema({
   username: {type: String, required: true, unique: true},
-  password: {type: String, required: true, min: 10},
+  password: {type: String, required: true}
 });
 
 UserSchema.methods.serialize = function() {

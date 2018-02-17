@@ -7,18 +7,14 @@
   <meta name="description" content="Create an item">
   <title>Create Item</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
   <link href="styles/index.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 
   <header role="banner">
-    <h1>Carb Counts</h1>
-    <nav role="navigation">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-      </ul>
-    </nav>
+    <h1 class="app-name">Carb Counts</h1>
   </header>
 
   <form role="form" accept-charset="UTF-8" method="post" class="form" id="create-form">
@@ -32,13 +28,19 @@
       <input type="text" name="item-serving" id="item-serving" class="form-input" required/>
       <label for="item-calories">Calories</label>
       <input type="text" name="item-calories" id="item-calories" class="form-input" required/>
-      <label for="item-fiber">Dietary Fiber</label>
-      <input type="number" name="item-fiber" id="item-fiber" class="form-input" required/>
 
       <button type="submit" class="form-submit">Submit</button>
 
     </fieldset>
   </form>
+
+    <footer role="contentinfo" class="form-footer">
+    <nav role="navigation">
+      <ul class="nav">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+      </ul>
+    </nav>
+  </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="js/create-item.js"></script>
