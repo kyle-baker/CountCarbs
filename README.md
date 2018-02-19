@@ -7,11 +7,11 @@ Try it [here](https://salty-wave-10771.herokuapp.com/).
 *Home Page*
 ![Image of home page](screenshots/home.png?raw=true "Home Page")
 
-*Create Item*
-![Image of create item page](screenshots/results.png?raw=true "Create Item Page")
+*Create Item Page*
+![Image of create item page](screenshots/create-item.png?raw=true "Create Item Page")
 
 *Authorized Results Page*
-![Image of authorized results page](screenshots/results.png?raw=true "Authorized Results Page")
+![Image of authorized results page](screenshots/auth-results.png?raw=true "Authorized Results Page")
 
 ## Built With
 * HTML
