@@ -1,17 +1,16 @@
-//Variables
-let entries = [];
+// Variables
+let entries = []
 
-//Functions
-function retrieveItem() {
-  let retrievedStringResults = localStorage.getItem('item');
-  let data = JSON.parse(retrievedStringResults);
-  entries = data;
-  const results = displayItem(data);
-  $('.display-results').html(results);
+// Functions
+function retrieveItem () {
+  let retrievedStringResults = localStorage.getItem('item')
+  let data = JSON.parse(retrievedStringResults)
+  entries = data
+  const results = displayItem(data)
+  $('.display-results').html(results)
 }
 
-
-function displayItem(result) {
+function displayItem (result) {
   return `
     <div class="result-display">
     <h3 class="result-name">${result.name}</h3>
@@ -24,45 +23,44 @@ function displayItem(result) {
       <li></li>
       <li><a href="#" id="${result._id}" class="deleteLink">Delete</a></li>
     </div>
-  `;
+  `
 }
 
-//Event Listeners
-function handleEdit() {
-$('.editLink').click(event => {
-  event.preventDefault();
-  let retrievedStringResults = localStorage.getItem('item');
-  localStorage.setItem('editItem', retrievedStringResults);
-  window.location.href="edit-item.html";  
-})
+// Event Listeners
+function handleEdit () {
+  $('.editLink').click(event => {
+    event.preventDefault()
+    let retrievedStringResults = localStorage.getItem('item')
+    localStorage.setItem('editItem', retrievedStringResults)
+    window.location.href = 'edit-item.html'
+  })
 }
 
-function handleDelete() {
-$('.deleteLink').click(event => {
-  event.preventDefault();
-  const deleteID = $(event.currentTarget).attr("id");
-  fetch(`/carb-items/${deleteID}`, {
+function handleDelete () {
+  $('.deleteLink').click(event => {
+    event.preventDefault()
+    const deleteID = $(event.currentTarget).attr('id')
+    fetch(`/carb-items/${deleteID}`, {
       method: 'DELETE',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
     }).then(res => {
       return res
     }).then(response => {
-      let message = deleteMessage();
-      $('.display-results').html(message);
+      let message = deleteMessage()
+      $('.display-results').html(message)
     })
   })
 }
 
-function deleteMessage() {
+function deleteMessage () {
   return `
     <p class='deleted-item'> "${entries.name}" has been Deleted. </p>
   `
 }
 
-
-//Call Functions
+// Call Functions
 $(function () {
-  retrieveItem();
-  handleEdit();
-  handleDelete();
-});
+  retrieveItem()
+  handleEdit()
+  handleDelete()
+})
