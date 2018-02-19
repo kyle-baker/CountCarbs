@@ -20,7 +20,6 @@ function checkAuthentication() {
   else {
     window.location.href="log-in.html";
   }
-
 }
 
 function getCarbItem(query) {
