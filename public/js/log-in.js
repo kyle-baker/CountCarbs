@@ -1,6 +1,5 @@
 function registerEvent() {
   $("#log-in").submit(event => {
-
     event.preventDefault();
     let username = $("#username").val();
     let password = $("#user-password").val();
@@ -15,13 +14,29 @@ function registerEvent() {
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)      
     }).then(res => {
-      return res.json()
+      if (res.status === 401)
+        return res
+      else {
+        return res.json()
+      }
     }).then(response => {
-      localStorage.setItem('token', response.authToken)
-      window.location.href="auth-home.html";
+      if (response.status === 401) {
+        $('.display-error').html(errorMessage())
+      }
+      else {
+        $('.display-error').html("")
+        localStorage.setItem('token', response.authToken)
+        window.location.href="auth-home.html";
+      }
       clearFields();
     })
   })
+}
+
+function errorMessage() {
+  return `
+  <p class="error-message">Incorrect username or password</p>
+  `;
 }
 
 function clearFields() {

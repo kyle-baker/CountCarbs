@@ -6,32 +6,58 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { Strategy: LocalStrategy } = require('passport-local');
-const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
-
-
-//Logging
 const morgan = require('morgan');
 
+const { Strategy: LocalStrategy } = require('passport-local');
+const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const { DATABASE_URL, PORT, JWT_SECRET, JWT_EXPIRY } = require('./config');
 const { User, CarbItem } = require('./models')
 mongoose.Promise = global.Promise;
 
 const app = express();
 
-//Logging
 app.use(morgan('common'));
-
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
 //Passport Strategies
+const localStrategy = new LocalStrategy((username, password, callback) => {
+  let user;
+  User.findOne({ username: username })
+    .then(_user => {
+      user = _user;
+      if (!user) {
+        // Return a rejected promise so we break out of the chain of .thens.
+        // Any errors like this will be handled in the catch block.
+        return Promise.reject({
+          reason: "LoginError",
+          message: "Incorrect username or password"
+        });
+      }
+      return user.validatePassword(password);
+    })
+    .then(isValid => {
+      if (!isValid) {
+        return Promise.reject({
+          reason: "LoginError",
+          message: "Incorrect username or password"
+        });
+      }
+      return callback(null, user);
+    })
+    .catch(err => {
+      if (err.reason === "LoginError") {
+        return callback(null, false, err);
+      }
+      return callback(err, false);
+    });
+});
+
 const jwtStrategy = new JwtStrategy(
   {
     secretOrKey: JWT_SECRET,
     // Look for the JWT as a Bearer auth header
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
-    // Only allow HS256 tokens - the same as the ones we issue
     algorithms: ['HS256']
   },
   (payload, done) => {
@@ -39,9 +65,10 @@ const jwtStrategy = new JwtStrategy(
   }
 );
 
+passport.use(localStrategy);
 passport.use(jwtStrategy);
 
-//USERS
+
 //Authorization 
 const createAuthToken = function(user) {
   return jwt.sign({user}, JWT_SECRET, {
@@ -51,27 +78,17 @@ const createAuthToken = function(user) {
   });
 };
 
+//Protected endpoint 
 const jwtAuth = passport.authenticate('jwt', {session: false});
-//Protected endpoint
 app.get('/user/protected', jwtAuth, (req, res) => {
   return res.json({
     data: 'success'
   });
 });
 
+//USERS
 //Sign up
 app.post('/user/signup', (req, res) => {
-  const requiredFields = ['username', 'password'];
-  const missingField = requiredFields.find(field => !(field in req.body));
-
-  if (missingField) {
-    return res.status(422).json({
-      code: 422,
-      reason: 'ValidationError',
-      message: 'Missing field',
-      location: missingField
-    })
-  }
 
   const stringFields = ['username', 'password']
   const nonStringField = stringFields.find(
@@ -172,36 +189,14 @@ app.post('/user/signup', (req, res) => {
 });
 
 //Log in
-app.post('/user/login', (req, res) => {
-  const requiredFields = ['username', 'password'];
-  const {username, password } = req.body;
-  if (username && password) {
-      User.find({username: username}).then(response => {
-        console.log(response);
-        const user = response[0];
-        if (user.validatePassword(password)) {
-          console.log("You are now logged in");
-          const authToken = createAuthToken(user.serialize());
-          res.json({authToken});
+const localAuth = passport.authenticate('local', {session: false});
+// The user provides a username and password to login
+app.post('/user/login', localAuth, (req, res) => {
+  const authToken = createAuthToken(req.user.serialize());
+  res.json({authToken});
+});
 
-        }
-        else {
-          res.status(401).json({ message: 'Please re-enter username and password' });
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        res.status(401).json({ message: 'Please re-enter username and password' });
-      })
-    }
-
-  else {
-    return res.status(400).json({message: 'You must enter a username and password'})
-  }
-})
-
-
-//CRUD
+//Search for items
 app.get('/carb-items', (req, res) => {
   var queryValue = req.query.name;
   var regex = new RegExp(queryValue);
@@ -219,11 +214,9 @@ app.get('/carb-items', (req, res) => {
 });
 
 
-// can also request by ID
+// Request item by ID
 app.get('/carb-items/:id', (req, res) => {
   CarbItem
-    // this is a convenience method Mongoose provides for searching
-    // by the object _id property
     .findById(req.params.id)
     .then(carbItem => res.json(carbItem))
     .catch(err => {
@@ -233,7 +226,7 @@ app.get('/carb-items/:id', (req, res) => {
     });
 });
 
-
+//Create a new item
 app.post('/create-carb-item', (req, res) => {
   const requiredFields = ['name', 'carbs', 'calories', 'serving', 'publicAccess'];
   for (let i = 0; i < requiredFields.length; i++) {
@@ -259,7 +252,7 @@ app.post('/create-carb-item', (req, res) => {
     });
 });
 
-
+//Update an existing item
 app.put('/carb-items/:id', (req, res) => {
   // ensure that the id in the request path and the one in request body match
   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
@@ -280,12 +273,13 @@ app.put('/carb-items/:id', (req, res) => {
   });
 
   CarbItem
-    // all key/value pairs in toUpdate will be updated -- that's what `$set` does
+    // all key/value pairs in toUpdate will be updated
     .findByIdAndUpdate(req.params.id, { $set: toUpdate })
     .then(carbItem => res.status(204).json(carbItem.serialize()).end())
     .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
 
+//Delete an item by ID
 app.delete('/carb-items/:id', (req, res) => {
   CarbItem
     .findByIdAndRemove(req.params.id)
@@ -297,7 +291,6 @@ app.delete('/carb-items/:id', (req, res) => {
 app.use('*', function (req, res) {
   res.status(404).json({ message: 'Not Found' });
 });
-
 
 let server;
 

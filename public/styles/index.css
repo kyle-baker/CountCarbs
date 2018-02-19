@@ -35,6 +35,12 @@ button {
   padding: 40px;
 }
 
+.error-message {
+  color: red;
+  font-weight: 700;
+  margin-bottom: 1px;
+}
+
 .display-results {
   width: 70%;
   margin: 0 auto;
@@ -170,5 +176,13 @@ ul {
 .subtitle {
   font-weight: 600;
   font-size: 23px;
+}
 
+.success-message {
+  margin: auto;
+  padding: 15px 30px;
+  border: 1px black solid;
+  width: 35%;
+  border-radius: 30px;
+  background-color: #ffffff;
 }

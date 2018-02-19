@@ -16,21 +16,24 @@
   <header role="banner">
     <h1 class="app-name">Carb Counts</h1>
   </header>
+  <div class="signup-page">
+    <form role="form" action="/signup" accept-charset="UTF-8" method="post" class="form" id="sign-up">
+      <fieldset>
+        <legend>Sign up</legend>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" class="form-input" required/>
+        <label for="user-password">Password</label>
+        <input type="password" name="user-password" id="user-password" class="form-input" required/>
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" name="confirm-password" id="confirm-password" class="form-input" required/>
+        <div class="display-error">
+        </div>
+        <button type="submit" class="form-submit">Submit</button>
+      </fieldset>
 
-  <form role="form" action="/signup" accept-charset="UTF-8" method="post" class="form" id="sign-up">
-    <fieldset>
-      <legend>Sign up</legend>
-      <label for="username">Username</label>
-      <input type="text" name="username" id="username" class="form-input" required/>
-      <label for="user-password">Password</label>
-      <input type="password" name="user-password" id="user-password" class="form-input" required/>
-      <label for="confirm-password">Confirm Password</label>
-      <input type="password" name="confirm-password" id="confirm-password" class="form-input" required/>
-      <button type="submit" class="form-submit">Submit</button>
-    </fieldset>
-
-    <p>Already have an account? <a href="log-in.html" class="form-link">Log in</a></p>
-  </form>
+      <p>Already have an account? <a href="log-in.html" class="form-link">Log in</a></p>
+    </form>
+  </div>
 
   <footer role="contentinfo" class="form-footer">
     <nav role="navigation">
