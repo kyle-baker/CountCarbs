@@ -19,6 +19,10 @@ function storeSearchData (data) {
   window.location.href = 'results.html'
 }
 
+// Delete the saved token in local storage to 'log out'
+function deleteToken () {
+  localStorage.removeItem('token')
+}
 // Event Listeners
 function watchSubmit () {
   $('.js-search-form').submit(event => {
@@ -35,4 +39,5 @@ function watchSubmit () {
 }
 
 // Call Functions
+$(deleteToken)
 $(watchSubmit)

@@ -90,7 +90,6 @@ function handleDelete () {
   $('.delete-link').click(event => {
     event.preventDefault()
     const deleteID = $('#item-id').val()
-    console.log('Here is the delete item ID in handleDelete' + deleteID)
     fetch(`/carb-items/${deleteID}`, {
       method: 'DELETE',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
@@ -98,7 +97,6 @@ function handleDelete () {
       return res
     }).then(response => {
       let message = deleteMessage()
-      console.log(response)
       $('.edit-container').html(message)
     })
   })

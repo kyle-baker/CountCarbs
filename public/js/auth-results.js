@@ -63,7 +63,6 @@ function displaySearchResults (result) {
 function handleEdit () {
   $('.editLink').click(event => {
     event.preventDefault()
-    console.log('handleEdit ran')
     const editId = $(event.currentTarget).attr('id')
     let entry = entries.find(object => {
       return object._id == editId

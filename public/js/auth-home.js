@@ -58,5 +58,19 @@ function watchSubmit () {
   })
 }
 
+function handleEdit () {
+  $('.editLink').click(event => {
+    event.preventDefault()
+    const editId = $(event.currentTarget).attr('id')
+    let entry = entries.find(object => {
+      return object._id == editId
+    })
+    let entryAsString = JSON.stringify(entry)
+    localStorage.setItem('editItem', entryAsString)
+    window.location.href = 'edit-item.html'
+  })
+}
+
 $(checkAuthentication)
 $(watchSubmit)
+$(handleEdit)
